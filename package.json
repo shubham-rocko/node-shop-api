@@ -1,0 +1,27 @@
+{
+  "name": "rest-shop",
+  "version": "1.0.0",
+  "description": "A Node.js RESTful API Tutorial Project (Build a Simple Shop API).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shubham-rocko/node-shop-api.git"
+  },
+  "keywords": [
+    "node",
+    "restful",
+    "api"
+  ],
+  "author": "Shubham Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shubham-rocko/node-shop-api/issues"
+  },
+  "homepage": "https://github.com/shubham-rocko/node-shop-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
