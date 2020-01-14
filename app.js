@@ -2,15 +2,23 @@ const express = require("express");
 const app = express();
 const morgan = require ('morgan');
 const bodyParser = require('body-parser');
-
+const mongoose = require('mongoose');
 
 const productsRoutes = require('./api/router/products');
 const ordersRoutes = require('./api/router/orders');
 
-app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended: false}));
+mongoose.connect('mongodb+srv://node-shop-api:Shubham%406@cluster0-yr5nx.mongodb.net/test?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}); //mongoAtlas connection
+
+app.use(morgan('dev')); //log to terminal whatever happen
+app.use(bodyParser.urlencoded({extended: false})); //parse json body of the request
 app.use(bodyParser.json());
 
+/**
+ * Enable CORS (Cross Origin Resourse Sharing)
+ */
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header(
