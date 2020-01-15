@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const productsRoutes = require('./api/router/products');
 const ordersRoutes = require('./api/router/orders');
+const usersRoutes = require('./api/router/users');
 
 mongoose.promise = global.promise;
 
@@ -40,6 +41,7 @@ app.use((req, res, next) => {
 
 app.use('/products', productsRoutes);
 app.use('/orders', ordersRoutes);
+app.use('/user', usersRoutes);
 
 /**
  * Handling default route (which is /) and throw error not found
