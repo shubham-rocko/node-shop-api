@@ -4,7 +4,7 @@ const multer = require('multer');
 
 const Product = require('../models/product');
 
-const storage = multer({
+const storage = multer.diskStorage({
     destination: function(req, file, cb){
         cb(null, './uploads/');
     },
@@ -57,7 +57,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', upload.single('productImage'), (req, res, next) => {
-    console.lof(req.file)
+    console.log(req.file)
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,

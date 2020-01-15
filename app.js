@@ -41,6 +41,9 @@ app.use((req, res, next) => {
 app.use('/products', productsRoutes);
 app.use('/orders', ordersRoutes);
 
+/**
+ * Handling default route (which is /) and throw error not found
+ */
 app.use((req, res, next) => {
     const error = new Error("Not Found");
     error.status = 404;
