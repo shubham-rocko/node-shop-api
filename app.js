@@ -10,7 +10,9 @@ const usersRoutes = require('./api/router/users');
 
 mongoose.promise = global.promise;
 
-mongoose.connect('mongodb+srv://node-shop-api:Shubham%406@cluster0-yr5nx.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://node-shop-api:'+
+        process.env.MONGO_ATLAS_PW
+        +'@cluster0-yr5nx.mongodb.net/test?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }); //mongoAtlas connection

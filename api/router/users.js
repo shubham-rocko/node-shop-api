@@ -1,11 +1,12 @@
 const express = require('express');
-const route = express.Router();
+const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
-route.post('/signup', (req, res, next) => {
+router.post('/signup', (req, res, next) => {
     User.find({email: req.body.email}).exec()
     .then((user) => {
         if(user.length > 0){
@@ -38,4 +39,54 @@ route.post('/signup', (req, res, next) => {
     });
 });
 
-module.exports = route
+router.post("/login", (req, res, next) => {
+    User.find({email: req.body.email}).exec()
+    .then((user) => {
+        if(user.length < 1){
+            res.status(401).json({
+                message: "Auth failed"
+            });
+        } else {
+            bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+                if(err){
+                    return res.status(401).json({
+                        message: "Auth failed"
+                    });
+                } else if(result){
+                    const token = jwt.sign({
+                        email: user[0].email,
+                        userId: user[0]._id
+                    }, process.env.JWT_KEY, {
+                        expiresIn: "1h"
+                    });
+                    return res.status(200).json({
+                        message: "Auth Successful",
+                        token: token
+                    });
+                }
+                res.status(401).json({
+                    message: "Auth failed"
+                });
+            })
+        }
+    })
+    .catch(err => {
+        res.status(500).json({error: err});
+    });
+});
+
+router.delete("/:userId", (req, res, next) => {
+    User.deleteOne({_id: req.param.userId}).exec()
+    .then((result) => {
+        res.status(200).json({
+            message: "User removed"
+        });
+    })
+    .catch((err) => {
+        res.status(500).json({
+            error: err
+        });
+    });
+});
+
+module.exports = router;
